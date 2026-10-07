@@ -84,21 +84,6 @@ export default function Contact() {
           <div className="flex flex-col items-center gap-3 text-center">
             <div className="relative">
               <Mascot pose={poseFor[status.type]} size="lg" />
-
-              {waiting && (
-                <WatchBadge
-                  fast={status.type === 'loading'}
-                  className="absolute -right-4 top-1/3"
-                />
-              )}
-
-              {status.type === 'success' && (
-                <span
-                  aria-hidden="true"
-                  className="absolute -right-4 top-1/4 grid h-16 w-16 animate-pop place-items-center rounded-full bg-green text-4xl shadow-lg motion-reduce:animate-none"
-                >
-                </span>
-              )}
             </div>
 
             <p
