@@ -2,7 +2,6 @@ import { useState } from 'react'
 import Mascot from './Mascot'
 import Window, { Prompt } from './Window'
 
-fetch(`${import.meta.env.VITE_API_URL}/api/contact`, {})
 const initialForm = { name: '', email: '', message: '' }
 
 const moods = { idle: 'idle', loading: 'working', success: 'happy', error: 'error' }
@@ -29,8 +28,10 @@ export default function Contact() {
     e.preventDefault()
     setStatus({ type: 'loading', text: '' })
 
+    fetch(`${import.meta.env.VITE_API_URL}/api/contact`, {})
+    
     try {
-      const res = await fetch(`${API_URL}/api/contact`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
