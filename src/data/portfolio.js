@@ -20,17 +20,25 @@ export const profile = {
 
 export const mascot = {
   name: 'Kibie',
-  // penguin | cat | robot | ghost | blob | custom
-  defaultTemplate: 'custom',
-  // To use your own artwork: put it in client/public (e.g. mascot.png),
-  // set customSrc: '/mascot.png', and a "Custom" option appears in the picker.
-  customSrc: '',
   greetings: [
-    "Hi! Welcome to my human's portfolio!",
+    "Hi, I'm Kib! Welcome to my portfolio!",
     'Psst... check out the projects below!',
     'Want to work together? Say hello!',
     'I help debug. Mostly by watching.',
   ],
+  // All files live in client/public/mascot/
+  poses: {
+    wave: '/mascot/03_wave_animated.gif',
+    peace: '/mascot/04_peace_sign_animated.gif',
+    hips: '/mascot/05_hands_on_hips_animated.gif',
+    laugh: '/mascot/02_head_laugh_animated.gif',
+    head: '/mascot/head1.gif',
+
+    // TODO: replace with your new "looking at watch" GIF when you have it
+    waiting: '/mascot/05_hands_on_hips_animated.gif',
+    // TODO: replace with your new "OK hand gesture" GIF when you have it
+    ok: '/mascot/04_peace_sign_animated.gif',
+  },
 }
 
 export const skills = [
