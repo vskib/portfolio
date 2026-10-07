@@ -34,10 +34,8 @@ export const mascot = {
     laugh: '/mascot/02_head_laugh_animated.gif',
     head: '/mascot/head1.gif',
 
-    // TODO: replace with your new "looking at watch" GIF when you have it
-    waiting: '/mascot/05_hands_on_hips_animated.gif',
-    // TODO: replace with your new "OK hand gesture" GIF when you have it
-    ok: '/mascot/04_peace_sign_animated.gif',
+    waiting: '/mascot/waiting.webp',
+    ok: '/mascot/pose_thumbs_up.gif',
   },
 }
 
