@@ -1,4 +1,4 @@
-import { MascotProvider } from './context/MascotContext'
+import { MascotProvider } from './Context/MascotContext'
 import Panel from './components/Panel'
 import Hero from './components/Hero'
 import Skills from './components/Skills'
