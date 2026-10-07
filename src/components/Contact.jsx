@@ -1,14 +1,16 @@
-import { useState } from 'react'
-import Mascot from './Mascot'
+import { useEffect, useState } from 'react'
+import Mascot, { preload } from './Mascot'
 import Window, { Prompt } from './Window'
 
 const initialForm = { name: '', email: '', message: '' }
 
-const moods = { idle: 'idle', loading: 'working', success: 'happy', error: 'error' }
+// Which mascot pose to show for each form state
+const poseFor = { idle: 'waiting', loading: 'waiting', success: 'ok', error: 'hips' }
+
 const mascotLines = {
-  idle: 'Say hi! I read everything.',
-  loading: 'Sending your message...',
-  success: 'Delivered! Thank you!',
+  idle: 'Waiting for your message...',
+  loading: 'Sending... hold on!',
+  success: 'Message received. All OK!',
   error: 'Oops, something broke.',
 }
 
@@ -17,9 +19,30 @@ const wrap =
 const input =
   'w-full bg-transparent text-fg outline-none placeholder:text-muted/60'
 
+// Little wristwatch with a ticking hand (spins faster while sending)
+function WatchBadge({ fast, className = '' }) {
+  return (
+    <svg viewBox="0 0 48 48" aria-hidden="true" className={`h-14 w-14 drop-shadow-lg ${className}`}>
+      <rect x="15" y="1" width="18" height="10" rx="3" fill="#45475a" />
+      <rect x="15" y="37" width="18" height="10" rx="3" fill="#45475a" />
+      <circle cx="24" cy="24" r="14" fill="#1e1e2e" stroke="#cba6f7" strokeWidth="3" />
+      <circle cx="24" cy="24" r="1.8" fill="#cdd6f4" />
+      <line x1="24" y1="24" x2="29" y2="21" stroke="#cdd6f4" strokeWidth="2.4" strokeLinecap="round" />
+      <g
+        className={`${fast ? 'animate-tick-fast' : 'animate-tick'} motion-reduce:animate-none`}
+        style={{ transformOrigin: '24px 24px' }}
+      >
+        <line x1="24" y1="24" x2="24" y2="13" stroke="#f38ba8" strokeWidth="2" strokeLinecap="round" />
+      </g>
+    </svg>
+  )
+}
+
 export default function Contact() {
   const [form, setForm] = useState(initialForm)
   const [status, setStatus] = useState({ type: 'idle', text: '' })
+
+  useEffect(() => preload('waiting', 'ok', 'hips'), [])
 
   const handleChange = (e) =>
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
@@ -27,7 +50,7 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setStatus({ type: 'loading', text: '' })
-    
+
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL}/api/contact`, {
         method: 'POST',
@@ -51,14 +74,40 @@ export default function Contact() {
     error: { tag: 'FAILED', color: 'text-red', text: status.text },
   }[status.type]
 
+  const waiting = status.type === 'idle' || status.type === 'loading'
+
   return (
     <section id="contact" className="mx-auto max-w-6xl scroll-mt-12 px-4 py-10">
       <h2 className="sr-only">Contact</h2>
       <Window title="~/contact: ./send_message.sh">
         <div className="grid items-start gap-8 md:grid-cols-[auto_1fr]">
           <div className="flex flex-col items-center gap-3 text-center">
-            <Mascot size="lg" mood={moods[status.type]} float={status.type === 'success'} />
-            <p className="max-w-[14rem] rounded-lg border border-line bg-overlay px-3 py-2 text-xs">
+            <div className="relative">
+              <Mascot pose={poseFor[status.type]} size="lg" />
+
+              {waiting && (
+                <WatchBadge
+                  fast={status.type === 'loading'}
+                  className="absolute -right-4 top-1/3"
+                />
+              )}
+
+              {status.type === 'success' && (
+                <span
+                  aria-hidden="true"
+                  className="absolute -right-4 top-1/4 grid h-16 w-16 animate-pop place-items-center rounded-full bg-green text-4xl shadow-lg motion-reduce:animate-none"
+                >
+                  👌
+                </span>
+              )}
+            </div>
+
+            <p
+              aria-live="polite"
+              className={`max-w-[14rem] rounded-lg border bg-overlay px-3 py-2 text-xs ${
+                status.type === 'error' ? 'border-red text-red' : 'border-line'
+              }`}
+            >
               {mascotLines[status.type]}
             </p>
           </div>

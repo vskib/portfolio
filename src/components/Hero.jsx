@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react'
 import { profile, mascot } from '../data/portfolio'
-import Mascot from './Mascot'
+import Mascot, { preload } from './Mascot'
 import Window, { Prompt } from './Window'
 
 const palette = [
   'bg-red', 'bg-peach', 'bg-yellow', 'bg-green',
   'bg-teal', 'bg-blue', 'bg-mauve', 'bg-pink',
 ]
+
+// Click the mascot to cycle through these poses
+const poseCycle = ['wave', 'peace', 'hips']
 
 function useTypewriter(text, speed = 16) {
   const [out, setOut] = useState('')
@@ -29,8 +32,10 @@ function useTypewriter(text, speed = 16) {
 
 export default function Hero() {
   const [greeting, setGreeting] = useState(0)
-  const [hover, setHover] = useState(false)
+  const [poseIndex, setPoseIndex] = useState(0)
   const typed = useTypewriter(profile.headline)
+
+  useEffect(() => preload('peace', 'hips'), [])
 
   const rows = [
     { label: 'Name', value: profile.name },
@@ -45,7 +50,7 @@ export default function Hero() {
 
         <div className="grid items-center gap-8 md:grid-cols-[auto_1fr]">
           {/* Mascot + cowsay bubble */}
-          <div className="flex flex-col items-center gap-5">
+          <div className="flex flex-col items-center gap-4">
             <button
               type="button"
               onClick={() => setGreeting((g) => (g + 1) % mascot.greetings.length)}
@@ -58,9 +63,17 @@ export default function Hero() {
               <span className="mt-1 block text-[10px] text-muted">click for next</span>
               <span className="absolute -bottom-1.5 left-1/2 h-3 w-3 -translate-x-1/2 rotate-45 border-b border-r border-line bg-overlay" />
             </button>
-            <div onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
-              <Mascot size="lg" float mood={hover ? 'happy' : 'idle'} />
-            </div>
+
+            <button
+              type="button"
+              onClick={() => setPoseIndex((i) => (i + 1) % poseCycle.length)}
+              aria-label="Change mascot pose"
+              title="Click me!"
+              className="cursor-pointer"
+            >
+              <Mascot pose={poseCycle[poseIndex]} size="lg" />
+            </button>
+            <span className="text-[10px] text-muted">click me to change pose</span>
           </div>
 
           {/* neofetch info */}
