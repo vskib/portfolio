@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { useMascot } from '../context/MascotContext'
+import { useMascot } from '../Context/MascotContext'
 import { MascotArt, pickerOptions } from './Mascot'
 
 const workspaces = [
