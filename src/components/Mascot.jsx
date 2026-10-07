@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { mascot } from '../data/portfolio'
-import { useMascot } from '../context/MascotContext'
+import { useMascot } from '../Context/MascotContext'
 
 const INK = '#11111b'
 
