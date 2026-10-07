@@ -97,7 +97,6 @@ export default function Contact() {
                   aria-hidden="true"
                   className="absolute -right-4 top-1/4 grid h-16 w-16 animate-pop place-items-center rounded-full bg-green text-4xl shadow-lg motion-reduce:animate-none"
                 >
-                  👌
                 </span>
               )}
             </div>

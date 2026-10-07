@@ -9,7 +9,7 @@ const palette = [
 ]
 
 // Click the mascot to cycle through these poses
-const poseCycle = ['wave', 'peace', 'hips']
+const poseCycle = ['wave', 'hips']
 
 function useTypewriter(text, speed = 16) {
   const [out, setOut] = useState('')
