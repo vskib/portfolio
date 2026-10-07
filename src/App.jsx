@@ -27,7 +27,7 @@ export default function App() {
             <span className="text-muted">exit 0</span>
             <span className="ml-auto flex items-center gap-2 text-muted">
               <Mascot size="xs" />
-              © {new Date().getFullYear()} {profile.name} · React, Tailwind, Express &amp; Supabase
+              © {new Date().getFullYear()} {profile.name}
             </span>
           </div>
         </footer>
