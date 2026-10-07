@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Mascot from './Mascot'
 import Window, { Prompt } from './Window'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+fetch(`${import.meta.env.VITE_API_URL}/api/contact`, {})
 const initialForm = { name: '', email: '', message: '' }
 
 const moods = { idle: 'idle', loading: 'working', success: 'happy', error: 'error' }
